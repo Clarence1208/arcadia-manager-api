@@ -6,8 +6,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
-    .setTitle("CineManager")
-    .setDescription("The cinema management API description")
+    .setTitle("Arcadia Solutions Manager API")
+    .setDescription("The Arcadia Solutions manager API")
     .setVersion("1.0")
     .addBearerAuth(
       {

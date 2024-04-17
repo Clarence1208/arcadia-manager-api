@@ -14,7 +14,10 @@ export class Website {
   })
   url: string;
 
-  @Column()
+  @Column({
+    type: "timestamp",
+    default: () => "CURRENT_TIMESTAMP",
+  })
   createdAt: Date;
 
   @ManyToOne((type) => User, (user) => user.websites)
