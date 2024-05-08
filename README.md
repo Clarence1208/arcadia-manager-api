@@ -3,7 +3,7 @@
 ## About the app
 
     This API allows the creation and management of arcadia-solutions websites 
-    When creating an association, a script is run to create: 
+    When creating a website, a script is run to create: 
             - a database with a superAdmin according to the info given
             - a front
             - a domain name

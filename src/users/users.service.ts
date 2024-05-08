@@ -72,12 +72,15 @@ export class UsersService {
         { userId: user.id, email: user.email, roles: user.roles },
         secret,
         {
-          expiresIn: "1w",
+          expiresIn: "2h",
         },
       );
       await this.usersRepository.update(user.id, { loginToken: token });
 
       return {
+        id: user.id,
+        firstName: user.firstName,
+        surname: user.surname,
         loginToken: token,
       };
     } catch (error) {
