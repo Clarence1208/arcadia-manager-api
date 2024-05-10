@@ -38,21 +38,19 @@ export class WebsitesController {
   })
   @ApiBody({
     type: CreateWebsiteDto,
-    description: "Json structure for create user object",
+    description: "Json structure for create websites object",
   })
   async create(@Body() createWebsiteDTO) {
     return this.websitesServices.create(createWebsiteDTO);
   }
 
   @Get()
-  @Roles(Role.Admin)
-  // @UseGuards(JwtAuthGuard) Before making it global this was needed
   @ApiResponse({
     status: 200,
-    description: "The users has been successfully fetched.",
+    description: "The websites has been successfully fetched.",
   })
   async findAll(@Query() query: ListWebsitesDto): Promise<Website[]> {
-    return this.websitesServices.findAll(query.limit, query.page);
+    return this.websitesServices.findAll(query.limit, query.page, query.userId);
   }
 
   @Get(":id")

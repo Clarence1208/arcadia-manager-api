@@ -1,6 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 
 import { IsDate, IsEmail, IsString, MinLength } from "class-validator";
+import {User} from "../../users/user.entity";
 
 export class CreateWebsiteDto {
   @ApiProperty({
@@ -23,4 +24,12 @@ export class CreateWebsiteDto {
   })
   @IsString()
   dbPassword: string;
+
+  @ApiProperty({
+    example: "1",
+    required: true,
+  })
+  userId: number;
+
+  user: User;
 }

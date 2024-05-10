@@ -81,7 +81,7 @@ export class UsersController {
   }
 
   @Get()
-  @Roles(Role.Admin)
+  @Roles([Role.Admin])
   // @UseGuards(JwtAuthGuard) Before making it global this was needed
   @ApiResponse({
     status: 200,

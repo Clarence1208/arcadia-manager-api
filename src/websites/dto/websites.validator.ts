@@ -17,6 +17,9 @@ export class WebsitesValidator {
         "8 characters minimum required for password.",
       );
     }
+    if(!createWebsiteDTO.userId){
+      throw new BadRequestException("User ID is required");
+    }
   }
 
   static validateListEntities(listAllEntities: ListWebsitesDto) {

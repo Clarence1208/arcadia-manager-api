@@ -5,10 +5,16 @@ export class ListWebsitesDto {
     example: "10",
     required: false,
   })
-  limit: number = 10;
+  limit: number;
   @ApiProperty({
     example: "1",
     required: false,
   })
-  page: number = 1;
+  page: number;
+
+  @ApiProperty({
+    example: "1",
+    required: false,
+  })
+  userId: number;
 }

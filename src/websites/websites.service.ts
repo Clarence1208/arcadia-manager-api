@@ -10,12 +10,15 @@ import { Website } from "./website.entity";
 import { CreateWebsiteDto } from "./dto/create-website-dto";
 import { UpdateWebsiteDto } from "./dto/update-website.dto";
 import { WebsitesValidator } from "./dto/websites.validator";
+import {User} from "../users/user.entity";
 
 @Injectable()
 export class WebsitesService {
   constructor(
     @InjectRepository(Website)
     private websitesRepository: Repository<Website>,
+    @InjectRepository(User)
+    private usersRepository: Repository<User>,
   ) {}
 
   async create(website: CreateWebsiteDto): Promise<Website> {
@@ -24,6 +27,13 @@ export class WebsitesService {
     } catch (error) {
       throw new BadRequestException(error.message);
     }
+
+    const user = await this.usersRepository.findOneBy({id: website.userId});
+    if (!user) {
+      throw new BadRequestException(`User ${website.userId} not found`);
+    }
+    website.user = user;
+
     const otherWebsite = await this.websitesRepository.findOneBy({
       url: website.url,
     });
@@ -48,11 +58,20 @@ export class WebsitesService {
     return await this.websitesRepository.findOneBy({ id });
   }
 
-  async findAll(limit?: number, page?: number): Promise<Website[]> {
-    return await this.websitesRepository.find({
-      take: limit || 10,
-      skip: (page - 1) * limit || 0,
-    });
+  async findAll(limit?: number, page?: number, userId?: number): Promise<Website[]> {
+
+    if (!userId) {
+      return await this.websitesRepository.find({
+        take: limit || 10,
+        skip: (page - 1) * limit || 0,
+      });
+    } else {
+      return await this.websitesRepository.find({
+        take: limit || 10,
+        skip: (page - 1) * limit || 0,
+        where: {user: {id: userId}},
+      });
+    }
   }
 
   async findOne(id: number): Promise<Website> {
