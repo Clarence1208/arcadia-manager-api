@@ -1,7 +1,7 @@
 version: '3.8'
 services:
-  mysql-db:
-    image: mysql:latest
+  arcadia-manager-mysql-db:
+    image: mysql
     environment:
       MYSQL_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD}
       MYSQL_DATABASE: ${DATABASE_NAME}
@@ -10,17 +10,21 @@ services:
     ports:
       - "${HOST_DB_PORT}:3306"
     volumes:
-      - mysql-data:/var/lib/mysql
+      - arcadia-manager-db-data:/var/lib/mysql
     restart: unless-stopped
-
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin:latest
+  arcadia-manager-api:
+    build: .
     ports:
-      - "8080:80"
+      - "${PORT}:3000"
     depends_on:
-      - mysql-db
+      - arcadia-manager-mysql-db
     environment:
-      - PMA_HOST=mysql-db
+      DATABASE_HOST: mysql-db
+      DATABASE_PORT: 3306
+      DATABASE_NAME: ${DATABASE_NAME}
+      DATABASE_USER: ${DATABASE_USERNAME}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+    restart: unless-stopped
 volumes:
-  mysql-data:
+  arcadia-manager-db-data:
     driver: local
