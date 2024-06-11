@@ -112,7 +112,7 @@ export class WebsitesService {
 
     async deployAPIdocker(params: ScriptDTO) {
 //./root/scripts/deploy-api.sh <name> <subdomain>
-        const scriptPath = "/scripts/deploy-api.sh " + params.name + " " + params.subDomain;
+        const scriptPath = "./src/scripts/deploy-api.sh " + params.name + " " + params.subDomain;
         let message;
         exec(`bash ${scriptPath}`, (error, stdout, stderr) => {
             if (error) {

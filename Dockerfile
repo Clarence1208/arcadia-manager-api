@@ -13,6 +13,11 @@ COPY .env ./
 # install bash
 RUN apk add --no-cache bash
 
+# install ssh
+RUN apk add --no-cache openssh
+RUN apk add --no-cache openssh-client sshpass
+
+
 # Install any needed packages
 RUN npm install
 
