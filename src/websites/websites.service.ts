@@ -114,7 +114,7 @@ export class WebsitesService {
 //./root/scripts/deploy-api.sh <name> <subdomain>
         const scriptPath = "/root/scripts/deploy-api.sh " + params.name + " " + params.subDomain;
         let message;
-        exec(`bash ${scriptPath}`, (error, stdout, stderr) => {
+        exec(`${scriptPath}`, (error, stdout, stderr) => {
             if (error) {
                 console.error(`Error executing script: ${error.message}`);
                 message = error.message;
