@@ -91,7 +91,7 @@ export class WebsitesService {
     }
 
     async deploySubdomain(params: ScriptDTO) {
-        const scriptPath = "/root/scripts/new-dommain.sh " + params.name + " " + params.subDomain;
+        const scriptPath = "./src/scripts/new-dommain.sh " + params.name + " " + params.subDomain;
         let message;
         exec(`bash ${scriptPath}`, (error, stdout, stderr) => {
             if (error) {
@@ -134,7 +134,7 @@ export class WebsitesService {
 
     async deployFrontendDocker(params: ScriptDTO) {
         // ./root/scripts/deploy-front.sh <name> <subdomain>
-        const scriptPath = "/root/scripts/deploy-front.sh " + params.name + " " + params.subDomain;
+        const scriptPath = "./src/scripts/deploy-front.sh " + params.name + " " + params.subDomain;
         let message;
         exec(`bash ${scriptPath}`, (error, stdout, stderr) => {
             if (error) {
@@ -155,7 +155,7 @@ export class WebsitesService {
 
     async deployNginxConf(params: ScriptDTO) {
 //./root/scripts/add-nginx.sh <name> <subdomain>
-        const scriptPath = "/root/scripts/add-nginx.sh " + params.name + " " + params.subDomain;
+        const scriptPath = "./src/scripts/add-nginx.sh " + params.name + " " + params.subDomain;
         let message;
         exec(`bash ${scriptPath}`, (error, stdout, stderr) => {
             if (error) {
