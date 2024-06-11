@@ -10,6 +10,9 @@ COPY package*.json ./
 # copy the .env file
 COPY .env ./
 
+# install bash
+RUN apk add --no-cache bash
+
 # Install any needed packages
 RUN npm install
 
@@ -21,6 +24,9 @@ RUN npm run build
 
 # Your app binds to port 3000 by default
 EXPOSE 3000
+
+# deep bind to /root/scripts to /scripts
+VOLUME /root/scripts /scripts
 
 # Define environment variable (if needed)
 # ENV NAME=value
