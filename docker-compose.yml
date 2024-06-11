@@ -25,6 +25,8 @@ services:
       DATABASE_USER: ${DATABASE_USERNAME}
       DATABASE_PASSWORD: ${DATABASE_PASSWORD}
     restart: unless-stopped
+    volumes:
+      - /root/scripts:/scripts
 volumes:
   arcadia-manager-db-data:
     driver: local
