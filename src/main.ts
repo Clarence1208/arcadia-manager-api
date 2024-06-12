@@ -7,7 +7,7 @@ async function bootstrap() {
 
     const httpsOptions = {
         key: fs.readFileSync('/etc/ssl/private-key.pem'),
-        cert: fs.readFileSync('/etc/ssl/public-certificate.pem'),
+        cert: fs.readFileSync('/etc/ssl/fullchain.pem'),
     };
     const app = await NestFactory.create(
         AppModule,
