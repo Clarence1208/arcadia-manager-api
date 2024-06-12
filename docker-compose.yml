@@ -19,7 +19,7 @@ services:
     depends_on:
       - arcadia-manager-mysql-db
     environment:
-      DATABASE_HOST: mysql-db
+      DATABASE_HOST: arcadia-manager-mysql-db
       DATABASE_PORT: 3306
       DATABASE_NAME: ${DATABASE_NAME}
       DATABASE_USER: ${DATABASE_USERNAME}
@@ -27,7 +27,8 @@ services:
     restart: unless-stopped
     # mount the ssl certificates
     volumes:
-      - /etc/letsencrypt/live/arcadia-solution.com-0002:/etc/ssl
+      - /etc/letsencrypt/live/arcadia-solution.com-0002:/etc/ssl/live
+      - /etc/letsencrypt/archive/arcadia-solution.com-0002:/etc/ssl/archive
 volumes:
   arcadia-manager-db-data:
     driver: local
