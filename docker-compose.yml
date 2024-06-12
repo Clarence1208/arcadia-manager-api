@@ -25,6 +25,9 @@ services:
       DATABASE_USER: ${DATABASE_USERNAME}
       DATABASE_PASSWORD: ${DATABASE_PASSWORD}
     restart: unless-stopped
+    # mount the ssl certificates
+    volumes:
+      - /etc/letsencrypt/live/arcadia-solution.com-0002:/etc/ssl
 volumes:
   arcadia-manager-db-data:
     driver: local
