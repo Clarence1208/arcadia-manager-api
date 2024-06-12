@@ -27,8 +27,8 @@ services:
     restart: unless-stopped
     # mount the ssl certificates
     volumes:
-      - /etc/letsencrypt/live/arcadia-solution.com-0002:/etc/ssl/live
-      - /etc/letsencrypt/archive/arcadia-solution.com-0002:/etc/ssl/archive
+      - /etc/letsencrypt/live/arcadia-solution.com-0002:/etc/ssl/live/arcadia-solution.com-0002
+      - /etc/letsencrypt/archive/arcadia-solution.com-0002:/etc/ssl/archive/arcadia-solution.com-0002
 volumes:
   arcadia-manager-db-data:
     driver: local
