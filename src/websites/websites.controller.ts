@@ -1,6 +1,6 @@
 import {Body, Controller, Delete, Get, Param, Patch, Post, Query, SetMetadata,} from "@nestjs/common";
 import {ApiBearerAuth, ApiBody, ApiResponse, ApiTags} from "@nestjs/swagger";
-import {WebsitesService} from "./websites.service";
+import {ScriptDTO, WebsitesService} from "./websites.service";
 import {CreateWebsiteDto} from "./dto/create-website-dto";
 import {ListWebsitesDto} from "./dto/list-websites.dto";
 import {Website} from "./website.entity";
@@ -8,11 +8,6 @@ import {UpdateWebsiteDto} from "./dto/update-website.dto";
 
 export const CAN_SKIP_AUTH_KEY = "isPublic";
 export const SkipAuthentication = () => SetMetadata(CAN_SKIP_AUTH_KEY, true);
-
-type ScriptDTO = {
-    name: string;
-    subDomain: string;
-};
 
 @ApiTags("Websites")
 @Controller("websites")
@@ -98,11 +93,12 @@ export class WebsitesController {
         description: "Bad request",
     })
     @ApiBody({
-        type: CreateWebsiteDto,
+        type: ScriptDTO,
         description: "Json structure for create websites object",
     })
     async createDomain(@Body() params: ScriptDTO) {
-        return this.websitesServices.deploySubdomain(params);
+        const result = await this.websitesServices.deploySubdomain(params);
+        return result;
     }
 
     @Post("scripts/confNginx")
@@ -116,11 +112,12 @@ export class WebsitesController {
         description: "Bad request",
     })
     @ApiBody({
-        type: CreateWebsiteDto,
+        type: ScriptDTO,
         description: "Json structure for create websites object",
     })
     async createConfNginx(@Body() params: ScriptDTO) {
-        return this.websitesServices.deployNginxConf(params);
+        const result = await this.websitesServices.deployNginxConf(params);
+        return result;
     }
 
     @Post("scripts/frontDocker")
@@ -134,11 +131,12 @@ export class WebsitesController {
         description: "Bad request",
     })
     @ApiBody({
-        type: CreateWebsiteDto,
+        type: ScriptDTO,
         description: "Json structure for create websites object",
     })
     async createFrontEndDOcker(@Body() params: ScriptDTO) {
-        return this.websitesServices.deployFrontendDocker(params);
+        const result = await this.websitesServices.deployFrontendDocker(params);
+        return result;
     }
 
     @Post("scripts/apiDocker")
@@ -152,11 +150,12 @@ export class WebsitesController {
         description: "Bad request",
     })
     @ApiBody({
-        type: CreateWebsiteDto,
+        type: ScriptDTO,
         description: "Json structure for create websites object",
     })
     async createAPIdocker(@Body() params: ScriptDTO) {
-        return this.websitesServices.deployAPIdocker(params);
+        const result = await this.websitesServices.deployAPIdocker(params);
+        return result;
     }
 
 

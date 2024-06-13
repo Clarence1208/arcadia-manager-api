@@ -7,9 +7,25 @@ import {UpdateWebsiteDto} from "./dto/update-website.dto";
 import {WebsitesValidator} from "./dto/websites.validator";
 import {User} from "../users/user.entity";
 import {exec} from "child_process";
+import * as util from "node:util";
+import {ApiProperty} from "@nestjs/swagger";
+import {IsString} from "class-validator";
 
-type ScriptDTO = {
+const execProm = util.promisify(exec);
+
+export class ScriptDTO  {
+    @ApiProperty({
+        example: "Monasso Asossiation",
+        required: true,
+    })
+    @IsString()
     name: string;
+
+    @ApiProperty({
+        example: "monasso",
+        required: true,
+    })
+    @IsString()
     subDomain: string;
 }
 
@@ -91,86 +107,66 @@ export class WebsitesService {
     }
 
     async deploySubdomain(params: ScriptDTO) {
-        const scriptPath = "./src/scripts/new-dommain.sh " + params.name + " " + params.subDomain;
-        let message;
-        exec(`bash ${scriptPath}`, (error, stdout, stderr) => {
-            if (error) {
-                console.error(`Error executing script: ${error.message}`);
-                message = error.message;
-            }
+        const scriptPath = `./src/scripts/new-dommain.sh ${params.name} ${params.subDomain}`;
+        try {
+            const {stdout, stderr} = await execProm(`bash ${scriptPath}`);
+            console.log(`Script stdout: ${stdout}`);
             if (stderr) {
                 console.error(`Script stderr: ${stderr}`);
-                message = stderr;
+                return {message: stderr};
             }
-            console.log(`Script stdout: ${stdout}`);
-            message = stdout;
-        });
-        return {
-            message: message
+            return {message: stdout};
+        } catch (error) {
+            console.error(`Error executing script: ${error.message}`);
+            return {message: error.message};
         }
     }
 
     async deployAPIdocker(params: ScriptDTO) {
-//./root/scripts/deploy-api.sh <name> <subdomain>
-        const scriptPath = "./src/scripts/deploy-api.sh " + params.name + " " + params.subDomain;
-        let message;
-        exec(`bash ${scriptPath}`, (error, stdout, stderr) => {
-            if (error) {
-                console.error(`Error executing script: ${error.message}`);
-                message = error.message;
-            }
+        const scriptPath = `./src/scripts/deploy-api.sh ${params.name} ${params.subDomain}`;
+        try {
+            const {stdout, stderr} = await execProm(`bash ${scriptPath}`);
+            console.log(`Script stdout: ${stdout}`);
             if (stderr) {
                 console.error(`Script stderr: ${stderr}`);
-                message = stderr;
+                return {message: stderr};
             }
-            console.log(`Script stdout: ${stdout}`);
-            message = stdout;
-        });
-        return {
-            message: message
+            return {message: stdout};
+        } catch (error) {
+            console.error(`Error executing script: ${error.message}`);
+            return {message: error.message};
         }
     }
 
-
     async deployFrontendDocker(params: ScriptDTO) {
-        // ./root/scripts/deploy-front.sh <name> <subdomain>
-        const scriptPath = "./src/scripts/deploy-front.sh " + params.name + " " + params.subDomain;
-        let message;
-        exec(`bash ${scriptPath}`, (error, stdout, stderr) => {
-            if (error) {
-                console.error(`Error executing script: ${error.message}`);
-                message = error.message;
-            }
+        const scriptPath = `./src/scripts/deploy-front.sh ${params.name} ${params.subDomain}`;
+        try {
+            const {stdout, stderr} = await execProm(`bash ${scriptPath}`);
+            console.log(`Script stdout: ${stdout}`);
             if (stderr) {
                 console.error(`Script stderr: ${stderr}`);
-                message = stderr;
+                return {message: stderr};
             }
-            console.log(`Script stdout: ${stdout}`);
-            message = stdout;
-        });
-        return {
-            message: message
+            return {message: stdout};
+        } catch (error) {
+            console.error(`Error executing script: ${error.message}`);
+            return {message: error.message};
         }
     }
 
     async deployNginxConf(params: ScriptDTO) {
-//./root/scripts/add-nginx.sh <name> <subdomain>
-        const scriptPath = "./src/scripts/add-nginx.sh " + params.name + " " + params.subDomain;
-        let message;
-        exec(`bash ${scriptPath}`, (error, stdout, stderr) => {
-            if (error) {
-                console.error(`Error executing script: ${error.message}`);
-                message = error.message;
-            }
+        const scriptPath = `./src/scripts/add-nginx.sh ${params.name} ${params.subDomain}`;
+        try {
+            const {stdout, stderr} = await execProm(`bash ${scriptPath}`);
+            console.log(`Script stdout: ${stdout}`);
             if (stderr) {
                 console.error(`Script stderr: ${stderr}`);
-                message = stderr;
+                return {message: stderr};
             }
-            console.log(`Script stdout: ${stdout}`);
-            message = stdout;
-        });
-        return {
-            message: message
+            return {message: stdout};
+        } catch (error) {
+            console.error(`Error executing script: ${error.message}`);
+            return {message: error.message};
         }
     }
 }
