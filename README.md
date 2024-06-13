@@ -13,9 +13,7 @@
 
 ## Installing the app
     Run cp .env.exemple  .env and modify it
-    Run docker-compose up
-    Run `npm install` at the root 
-    Run `npm run start`
+    Run docker-compose up --build
 
     The app is accessible at localhost:3000/
     The phpmyadmin is accessible at localhost:8080/

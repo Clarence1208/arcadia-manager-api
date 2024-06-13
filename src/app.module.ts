@@ -20,7 +20,7 @@ import { WebsitesService } from "./websites/websites.service";
     TypeOrmModule.forRoot({
       type: "mysql",
       host: "arcadia-manager-mysql-db",
-      port: parseInt(process.env.HOST_DB_PORT),
+      port: 3306,
       username: process.env.DATABASE_ROOT,
       password: process.env.DATABASE_ROOT_PASSWORD,
       database: process.env.DATABASE_NAME,
