@@ -60,7 +60,6 @@ export class WebsitesService {
         }
 
         try {
-            //TODO: RUN THE SCRIPT TO DEPLOY AND PERSONALIZE NEW DOCKER
             return await this.websitesRepository.save(website);
         } catch (error) {
             throw new InternalServerErrorException(

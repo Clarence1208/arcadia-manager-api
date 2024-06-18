@@ -5,7 +5,7 @@ import {User} from "../../users/user.entity";
 
 export class CreateWebsiteDto {
   @ApiProperty({
-    example: "monasso.arcadia-solutions.com",
+    example: "monasso",
     required: true,
   })
   @IsString()
