@@ -140,7 +140,7 @@ export class WebsitesController {
     }
 
     @Post("scripts/apiDocker")
-    @SkipAuthentication() //Allow user to do this without already being logged in (smert)
+    @SkipAuthentication()
     @ApiResponse({
         status: 201,
         description: "The website has been successfully created.",
