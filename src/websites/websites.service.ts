@@ -21,7 +21,21 @@ export class ScriptDTO  {
         required: true,
     })
     @IsString()
-    name: string;
+    adminEmail: string;
+
+    @ApiProperty({
+        example: "HOUSTON",
+        required: true,
+    })
+    @IsString()
+    surname: string;
+
+    @ApiProperty({
+        example: "Lea",
+        required: true,
+    })
+    @IsString()
+    firstName: string;
 
     @ApiProperty({
         example: "monasso",
@@ -122,7 +136,7 @@ export class WebsitesService {
     }
 
     async deploySubdomain(params: ScriptDTO) {
-        const scriptPath = `./src/scripts/new-dommain.sh ${params.name} ${params.subDomain}`;
+        const scriptPath = `./src/scripts/new-dommain.sh ${params.associationName} ${params.subDomain}`;
         try {
             const {stdout, stderr} = await execProm(`bash ${scriptPath}`);
             console.log(`Script stdout: ${stdout}`);
@@ -158,8 +172,8 @@ export class WebsitesService {
             console.error(`No SQL script found`);
             return {message: "No SQL script found"};
         }
-        let customScriptSQL = await this.customizeSQL(scriptSQL,params.name, params.dbPassword, params.associationName, "Admin", "ADMIN", "1990-12-12");
-        const scriptPath = `./src/scripts/deploy-api.sh ${params.name} ${params.subDomain} ${customScriptSQL} `;
+        let customScriptSQL = await this.customizeSQL(scriptSQL,params.adminEmail, params.dbPassword, params.associationName, "Admin", "ADMIN", "1990-12-12");
+        const scriptPath = `./src/scripts/deploy-api.sh ${params.associationName} ${params.subDomain} '${customScriptSQL}' `;
         try {
             const {stdout, stderr} = await execProm(`bash ${scriptPath}`);
             console.log(`Script stdout: ${stdout}`);
@@ -175,7 +189,7 @@ export class WebsitesService {
     }
 
     async deployFrontendDocker(params: ScriptDTO) {
-        const scriptPath = `./src/scripts/deploy-front.sh ${params.name} ${params.subDomain}`;
+        const scriptPath = `./src/scripts/deploy-front.sh ${params.associationName} ${params.subDomain}`;
         try {
             const {stdout, stderr} = await execProm(`bash ${scriptPath}`);
             console.log(`Script stdout: ${stdout}`);
@@ -191,7 +205,7 @@ export class WebsitesService {
     }
 
     async deployNginxConf(params: ScriptDTO) {
-        const scriptPath = `./src/scripts/add-nginx.sh ${params.name} ${params.subDomain}`;
+        const scriptPath = `./src/scripts/add-nginx.sh ${params.associationName} ${params.subDomain}`;
         try {
             const {stdout, stderr} = await execProm(`bash ${scriptPath}`);
             console.log(`Script stdout: ${stdout}`);
