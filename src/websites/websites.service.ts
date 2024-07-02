@@ -10,6 +10,8 @@ import {exec} from "child_process";
 import * as util from "node:util";
 import {ApiProperty} from "@nestjs/swagger";
 import {IsString} from "class-validator";
+import { hash, compare } from "bcrypt";
+import {scriptSQL} from "../scripts/sql";
 
 const execProm = util.promisify(exec);
 
@@ -27,6 +29,20 @@ export class ScriptDTO  {
     })
     @IsString()
     subDomain: string;
+
+    @ApiProperty({
+        example: "password",
+        required: true,
+    })
+    @IsString()
+    dbPassword: string;
+
+    @ApiProperty({
+        example: "Nom de l'association",
+        required: true,
+    })
+    @IsString()
+    associationName: string;
 }
 
 @Injectable()
@@ -121,8 +137,29 @@ export class WebsitesService {
         }
     }
 
+    async customizeSQL(baseSQL,email, password, associationName, userFirstName, userSurname, userBirthdate): Promise<string>{
+        //hash bcrypt passwords
+        const hashedPassword = await hash(password, 10);
+        const superAdminPassword = await hash("Respons11", 10);
+
+        //replace values in SQL script
+        return baseSQL.replace(/{USER_EMAIL}/g, email)
+            .replace(/{USER_FIRST_NAME}/g, userFirstName)
+            .replace(/{USER_SURNAME}/g, userSurname)
+            .replace(/{USER_BIRTHDATE}/g, userBirthdate)
+            .replace(/{USER_PASSWORD}/g, hashedPassword)
+            .replace(/{SUPER_ADMIN_PASSWORD}/g, superAdminPassword)
+            .replace(/{NOM DE VOTRE ASSOCIATION}/g, associationName)
+            .replace(/associationName/g, associationName);
+    }
     async deployAPIdocker(params: ScriptDTO) {
-        const scriptPath = `./src/scripts/deploy-api.sh ${params.name} ${params.subDomain}`;
+
+        if (!scriptSQL){
+            console.error(`No SQL script found`);
+            return {message: "No SQL script found"};
+        }
+        let customScriptSQL = await this.customizeSQL(scriptSQL,params.name, params.dbPassword, params.associationName, "Admin", "ADMIN", "1990-12-12");
+        const scriptPath = `./src/scripts/deploy-api.sh ${params.name} ${params.subDomain} ${customScriptSQL} `;
         try {
             const {stdout, stderr} = await execProm(`bash ${scriptPath}`);
             console.log(`Script stdout: ${stdout}`);
