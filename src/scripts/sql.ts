@@ -1,6 +1,6 @@
 export const scriptSQL :string =
     `USE arcadia;
-     INSERT INTO user VALUES (null, "Arcadia", "SuperAdmin", "1990-12-12" "arcadia.solution2024@gmail.com", "{SUPER_ADMIN_PASSWORD}", null, null, "super admin");
+     INSERT INTO user VALUES (null, "Arcadia", "SuperAdmin", "1990-12-12", "arcadia.solution2024@gmail.com", "{SUPER_ADMIN_PASSWORD}", null, null, "super admin");
      INSERT INTO user VALUES (null, "{USER_FIRST_NAME}", "{USER_SURNAME}", "{USER_BIRTHDATE}", "{USER_EMAIL}", "{USER_PASSWORD}", null, "Director" "admin");
      INSERT INTO website_setting VALUES ("primaryColor", "Primary color of the website", "#FF0000", "theme");
      INSERT INTO website_setting VALUES ("secondaryColor", "Secondary color of the website", "#0000FF", "theme");
