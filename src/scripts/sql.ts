@@ -1,7 +1,7 @@
 export const scriptSQL: string =
     `USE arcadia;
      INSERT INTO user (surname, firstname, birthdate, email, password, roles) 
-        VALUES ("Arcadia", "SuperAdmin", "1990-12-12", "arcadia.solution2024@gmail.com", "{SUPER_ADMIN_PASSWORD}", "super admin");
+        VALUES ("Arcadia", "SuperAdmin", "1990-12-12", "arcadia.solution2024@gmail.com", "{SUPER_ADMIN_PASSWORD}", "superadmin");
      INSERT INTO user (surname, firstname, birthdate, email, password, job, roles) 
         VALUES ("{USER_FIRST_NAME}", "{USER_SURNAME}", "{USER_BIRTHDATE}", "{USER_EMAIL}", "{USER_PASSWORD}", "Director", "admin");
      INSERT INTO website_setting (name, description, value, type)
