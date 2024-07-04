@@ -17,7 +17,7 @@ export const scriptSQL: string =
      INSERT INTO website_setting (name, description, value, type)
         VALUES ("imageHomePage", "L'image à afficher sur la page d'accueil", "A PERSONALISER", "image");
      INSERT INTO website_setting (name, description, value, type)
-        VALUES ("logo", "Le logo de l'associaton", "logo-logo-green.svg", "image");
+        VALUES ("logo", "Le logo de l'associaton", "{LOGO_NAME}", "image");
      INSERT INTO website_setting (name, description, value, type)
         VALUES ("termsOfServices", "Les mentions légales", "A PERSONALISER", "image");
      INSERT INTO website_setting (name, description, value, type)

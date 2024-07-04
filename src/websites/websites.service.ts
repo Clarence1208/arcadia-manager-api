@@ -58,6 +58,13 @@ export class ScriptDTO  {
     })
     @IsString()
     associationName: string;
+
+    @ApiProperty({
+        example: "Nom du logo",
+        required: true,
+    })
+    @IsString()
+    logoName: string;
 }
 
 @Injectable()
@@ -152,7 +159,7 @@ export class WebsitesService {
         }
     }
 
-    async customizeSQL(baseSQL,email, password, associationName, userFirstName, userSurname, userBirthdate): Promise<string>{
+    async customizeSQL(baseSQL,email, password, associationName, userFirstName, userSurname, userBirthdate, logoName): Promise<string>{
         //hash bcrypt passwords
         const hashedPassword = await hash(password, 10);
         const superAdminPassword = await hash("Respons11", 10);
@@ -165,6 +172,7 @@ export class WebsitesService {
             .replace(/{USER_PASSWORD}/g, hashedPassword)
             .replace(/{SUPER_ADMIN_PASSWORD}/g, superAdminPassword)
             .replace(/{NOM DE VOTRE ASSOCIATION}/g, associationName)
+            .replace(/{LOGO_NAME}/g, logoName)
             .replace(/associationName/g, associationName);
     }
     async deployAPIdocker(params: ScriptDTO) {
@@ -173,7 +181,7 @@ export class WebsitesService {
             console.error(`No SQL script found`);
             return {message: "No SQL script found"};
         }
-        let customScriptSQL = await this.customizeSQL(scriptSQL,params.adminEmail, params.dbPassword, params.associationName, "Admin", "ADMIN", "1990-12-12");
+        let customScriptSQL = await this.customizeSQL(scriptSQL,params.adminEmail, params.dbPassword, params.associationName, "Admin", "ADMIN", "1990-12-12", params.logoName);
         // Write the customized script to a file
         const filePath = `./src/scripts/api-deploy.sql`;
         await fs.writeFile(filePath, customScriptSQL, (err: { message: any; }) => {
