@@ -34,7 +34,8 @@ export class WebsitesController {
         return this.websitesServices.create(createWebsiteDTO);
     }
 
-    @Get()
+    @Get("")
+    @SkipAuthentication()
     @ApiResponse({
         status: 200,
         description: "The websites has been successfully fetched.",
@@ -44,9 +45,10 @@ export class WebsitesController {
     }
 
     @Get(":id")
+    @SkipAuthentication()
     @ApiResponse({
         status: 200,
-        description: "The user has been successfully fetched.",
+        description: "The websites has been successfully fetched.",
     })
     async findOne(@Param("id") id: number): Promise<Website> {
         return this.websitesServices.findOne(id);
@@ -55,7 +57,7 @@ export class WebsitesController {
     @Patch(":id")
     @ApiResponse({
         status: 200,
-        description: "The user has been successfully updated.",
+        description: "The website has been successfully updated.",
     })
     @ApiResponse({
         status: 400,
@@ -71,11 +73,11 @@ export class WebsitesController {
     @Delete(":id")
     @ApiResponse({
         status: 200,
-        description: "The user has been successfully deleted.",
+        description: "The website has been successfully deleted.",
     })
     @ApiResponse({
         status: 404,
-        description: "User not found",
+        description: "Website not found",
     })
     async remove(@Param("id") id: number): Promise<Website> {
         return this.websitesServices.remove(id);
