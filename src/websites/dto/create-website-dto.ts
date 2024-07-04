@@ -31,5 +31,12 @@ export class CreateWebsiteDto {
   })
   userId: number;
 
+  @ApiProperty({
+    example: "Goupix",
+    required: true,
+  })
+  @IsString()
+  associationName: string;
+
   user: User;
 }

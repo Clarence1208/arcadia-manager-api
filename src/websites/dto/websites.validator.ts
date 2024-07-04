@@ -20,6 +20,9 @@ export class WebsitesValidator {
     if(!createWebsiteDTO.userId){
       throw new BadRequestException("User ID is required");
     }
+    if(!createWebsiteDTO.associationName){
+      throw new BadRequestException("Association name is required");
+    }
   }
 
   static validateListEntities(listAllEntities: ListWebsitesDto) {

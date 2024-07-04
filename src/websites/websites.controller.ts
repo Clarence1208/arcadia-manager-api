@@ -30,7 +30,7 @@ export class WebsitesController {
         type: CreateWebsiteDto,
         description: "Json structure for create websites object",
     })
-    async create(@Body() createWebsiteDTO) {
+    async create(@Body() createWebsiteDTO: CreateWebsiteDto) {
         return this.websitesServices.create(createWebsiteDTO);
     }
 
