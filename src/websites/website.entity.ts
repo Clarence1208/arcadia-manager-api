@@ -20,9 +20,7 @@ export class Website {
   })
   createdAt: Date;
 
-  @Column({
-    type: "string",
-  })
+  @Column()
   associationName: string;
 
   @ManyToOne((type) => User, (user) => user.websites)
