@@ -23,8 +23,8 @@ echo "Copying SQL file to the server..."
 if sshpass -p $server_password scp -o StrictHostKeyChecking=no $path_to_sql_file $server_user@$server_address:$remote_sql_path;
 then
     echo "File copied successfully"
-    # wait for 5 seconds to ensure the file is copied and the connection is closed
-    sleep 5
+    # wait for 2 seconds to ensure the file is copied and the connection is closed
+    sleep 2
 else
     echo "Failed to copy file"
     exit 1
@@ -34,7 +34,7 @@ fi
 echo "Deploying API using the SQL script..."
 if sshpass -p $server_password ssh -o StrictHostKeyChecking=no $server_user@$server_address << EOF
     # Execute commands on the server
-    bash /root/scripts/deploy-api.sh ${name} ${subdomain} api-config-input.sql
+    bash /root/scripts/deploy-api.sh ${name} ${subdomain} /root/scripts/api-config-input.sql
 EOF
 then
     echo "API deployment successful"
