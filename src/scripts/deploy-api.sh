@@ -20,8 +20,11 @@ remote_sql_path="/root/scripts/api-config-input.sql"
 
 # Use scp to copy the SQL file to the server
 echo "Copying SQL file to the server..."
-if sshpass -p $server_password scp -o StrictHostKeyChecking=no $path_to_sql_file $server_user@$server_address:$remote_sql_path; then
+if sshpass -p $server_password scp -o StrictHostKeyChecking=no $path_to_sql_file $server_user@$server_address:$remote_sql_path;
+then
     echo "File copied successfully"
+    # wait for 5 seconds to ensure the file is copied and the connection is closed
+    sleep 5
 else
     echo "Failed to copy file"
     exit 1
