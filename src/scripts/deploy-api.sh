@@ -2,7 +2,7 @@
 
 # Check if parameters are passed
 if [ $# -ne 3 ]; then
-    echo "Usage: $0 <name> <subdomain> <path_to_sql_file>"
+    echo "Local script Usage: $0 <name> <subdomain> <path_to_sql_file>"
     exit 1
 fi
 

@@ -12,7 +12,7 @@ import {ApiProperty} from "@nestjs/swagger";
 import {IsString} from "class-validator";
 import { hash, compare } from "bcrypt";
 import {scriptSQL} from "../scripts/sql";
-import * as fs from "node:fs";
+const fs = require('fs/promises');
 
 const execProm = util.promisify(exec);
 
@@ -175,8 +175,14 @@ export class WebsitesService {
         }
         let customScriptSQL = await this.customizeSQL(scriptSQL,params.adminEmail, params.dbPassword, params.associationName, "Admin", "ADMIN", "1990-12-12");
         // Write the customized script to a file
-        const filePath = `./src/scripts/${params.associationName}_deploy.sql`;
-        await fs.writeFile(filePath, customScriptSQL, (err) => {});
+        const filePath = `./src/scripts/api-deploy.sql`;
+        await fs.writeFile(filePath, customScriptSQL, (err: { message: any; }) => {
+            if (err) {
+                console.error(`Error writing file: ${err.message}`);
+                return {message: err.message};
+            }
+            console.log(`File written to ${filePath}`);
+        });
         const scriptPath = `./src/scripts/deploy-api.sh ${params.associationName} ${params.subDomain} '${filePath}' `;
         try {
             const {stdout, stderr} = await execProm(`bash ${scriptPath}`);
