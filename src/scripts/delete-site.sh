@@ -15,9 +15,10 @@ if sshpass -p "4q2@a@XYIb98Ur" ssh -o StrictHostKeyChecking=no root@46.105.48.77
     docker rm ${subdomain}-arcadia-front
     docker stop ${subdomain}-arcadia-api
     docker rm ${subdomain}-arcadia-api
-    docker stop ${subdomain}-arcadia-mysql
-    docker rm ${subdomain}-arcadia-mysql
-    bash /root/scripts/rmSiteFromUpdate.sh ${subdomain}
+    docker stop ${subdomain}-mysql
+    docker rm ${subdomain}-mysql
+    cd /root/scripts
+    bash rmSiteFromUpdate.sh ${subdomain}
 EOF
 
 then
