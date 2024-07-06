@@ -8,8 +8,8 @@ export const scriptSQL: string =
         VALUES ("primaryColor", "Primary color of the website", "#FF0000", "theme");
      INSERT INTO website_setting (name, description, value, type)
         VALUES ("secondaryColor", "Secondary color of the website", "#0000FF", "theme");
-     INSERT INTO website_setting (name, description, value, type)
-        VALUES ("associationName", "Name of the association", "Arcadia", "");
+     INSERT INTO website_setting (name, description, value)
+        VALUES ("associationName", "Name of the association", "Arcadia");
      INSERT INTO website_setting (name, description, value, type)
         VALUES ("titleHomePage", "Le titre à afficher sur la page d'accueil", "Arcadia Template - votre site", "homePage");
      INSERT INTO website_setting (name, description, value, type)

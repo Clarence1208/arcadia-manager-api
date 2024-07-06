@@ -161,4 +161,57 @@ export class WebsitesController {
     }
 
 
+    @Post("scripts/pauseWebsite")
+    @ApiResponse({
+        status: 201,
+        description: "The website has been successfully paused.",
+    })
+    @ApiResponse({
+        status: 400,
+        description: "Bad request",
+    })
+    @ApiBody({
+        type: String,
+        description: "Subdomain of the website to pause",
+    })
+    async pauseWebsite(@Body() subdomain: string) {
+        const result = await this.websitesServices.pauseWebsite(subdomain);
+        return result;
+    }
+
+    @Post("scripts/resumeWebsite")
+    @ApiResponse({
+        status: 201,
+        description: "The website has been successfully created.",
+    })
+    @ApiResponse({
+        status: 400,
+        description: "Bad request",
+    })
+    @ApiBody({
+        type: String,
+        description: "Subdomain of the website to resume",
+    })
+    async resumeWebsite(@Body() subdomain: string) {
+        const result = await this.websitesServices.resumeWebsite(subdomain);
+        return result;
+    }
+
+    @Post("scripts/deleteWebsite")
+    @ApiResponse({
+        status: 201,
+        description: "The website has been successfully deleted.",
+    })
+    @ApiResponse({
+        status: 400,
+        description: "Bad request",
+    })
+    @ApiBody({
+        type: String,
+        description: "Subdomain of the website to delete",
+    })
+    async deleteWebsite(@Body() subdomain: string) {
+        const result = await this.websitesServices.deleteWebsite(subdomain);
+        return result;
+    }
 }

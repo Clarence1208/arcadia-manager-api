@@ -237,4 +237,52 @@ export class WebsitesService {
             return {message: error.message};
         }
     }
+
+    async pauseWebsite(subdomain: string){
+        const scriptPath = `./src/scripts/pause-website.sh ${subdomain}`;
+        try {
+            const {stdout, stderr} = await execProm(`bash ${scriptPath}`);
+            console.log(`Script stdout: ${stdout}`);
+            if (stderr) {
+                console.error(`Script stderr: ${stderr}`);
+                return {message: stderr};
+            }
+            return {message: stdout};
+        } catch (error) {
+            console.error(`Error executing script: ${error.message}`);
+            return {message: error.message};
+        }
+    }
+
+    async resumeWebsite(subdomain: string){
+        const scriptPath = `./src/scripts/resume-website.sh ${subdomain}`;
+        try {
+            const {stdout, stderr} = await execProm(`bash ${scriptPath}`);
+            console.log(`Script stdout: ${stdout}`);
+            if (stderr) {
+                console.error(`Script stderr: ${stderr}`);
+                return {message: stderr};
+            }
+            return {message: stdout};
+        } catch (error) {
+            console.error(`Error executing script: ${error.message}`);
+            return {message: error.message};
+        }
+    }
+
+    async deleteWebsite(subdomain: string){
+        const scriptPath = `./src/scripts/delete-site.sh ${subdomain}`;
+        try {
+            const {stdout, stderr} = await execProm(`bash ${scriptPath}`);
+            console.log(`Script stdout: ${stdout}`);
+            if (stderr) {
+                console.error(`Script stderr: ${stderr}`);
+                return {message: stderr};
+            }
+            return {message: stdout};
+        } catch (error) {
+            console.error(`Error executing script: ${error.message}`);
+            return {message: error.message};
+        }
+    }
 }
