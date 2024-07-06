@@ -12,6 +12,7 @@ import {ApiProperty} from "@nestjs/swagger";
 import {IsString} from "class-validator";
 import { hash, compare } from "bcrypt";
 import {scriptSQL} from "../scripts/sql";
+import { SubdomainDTO } from "./dto/subdomain-dto";
 const fs = require('fs/promises');
 
 const execProm = util.promisify(exec);
@@ -238,8 +239,8 @@ export class WebsitesService {
         }
     }
 
-    async pauseWebsite(subdomain: string){
-        const scriptPath = `./src/scripts/pause-website.sh ${subdomain}`;
+    async pauseWebsite(subdomain: SubdomainDTO){
+        const scriptPath = `./src/scripts/pause-website.sh ${subdomain.subdomain}`;
         try {
             const {stdout, stderr} = await execProm(`bash ${scriptPath}`);
             console.log(`Script stdout: ${stdout}`);
@@ -254,8 +255,8 @@ export class WebsitesService {
         }
     }
 
-    async resumeWebsite(subdomain: string){
-        const scriptPath = `./src/scripts/resume-website.sh ${subdomain}`;
+    async resumeWebsite(subdomain: SubdomainDTO){
+        const scriptPath = `./src/scripts/resume-website.sh ${subdomain.subdomain}`;
         try {
             const {stdout, stderr} = await execProm(`bash ${scriptPath}`);
             console.log(`Script stdout: ${stdout}`);
@@ -270,8 +271,8 @@ export class WebsitesService {
         }
     }
 
-    async deleteWebsite(subdomain: string){
-        const scriptPath = `./src/scripts/delete-site.sh ${subdomain}`;
+    async deleteWebsite(subdomain: SubdomainDTO){
+        const scriptPath = `./src/scripts/delete-site.sh ${subdomain.subdomain}`;
         try {
             const {stdout, stderr} = await execProm(`bash ${scriptPath}`);
             console.log(`Script stdout: ${stdout}`);

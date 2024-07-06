@@ -7,6 +7,7 @@ import {Website} from "./website.entity";
 import {UpdateWebsiteDto} from "./dto/update-website.dto";
 import { Roles } from "src/roles/roles.decorator";
 import { Role } from "src/roles/roles.enum";
+import { SubdomainDTO } from "./dto/subdomain-dto";
 
 export const CAN_SKIP_AUTH_KEY = "isPublic";
 export const SkipAuthentication = () => SetMetadata(CAN_SKIP_AUTH_KEY, true);
@@ -177,7 +178,7 @@ export class WebsitesController {
         type: String,
         description: "Subdomain of the website to pause",
     })
-    async pauseWebsite(@Body() subdomain: string) {
+    async pauseWebsite(@Body() subdomain: SubdomainDTO) {
         const result = await this.websitesServices.pauseWebsite(subdomain);
         return result;
     }
@@ -196,7 +197,7 @@ export class WebsitesController {
         type: String,
         description: "Subdomain of the website to resume",
     })
-    async resumeWebsite(@Body() subdomain: string) {
+    async resumeWebsite(@Body() subdomain: SubdomainDTO) {
         const result = await this.websitesServices.resumeWebsite(subdomain);
         return result;
     }
@@ -215,7 +216,7 @@ export class WebsitesController {
         type: String,
         description: "Subdomain of the website to delete",
     })
-    async deleteWebsite(@Body() subdomain: string) {
+    async deleteWebsite(@Body() subdomain: SubdomainDTO) {
         const result = await this.websitesServices.deleteWebsite(subdomain);
         return result;
     }
