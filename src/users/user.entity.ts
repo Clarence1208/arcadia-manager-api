@@ -31,3 +31,12 @@ export class User {
   @OneToMany((type) => Website, (website) => website.user)
   websites: Website[];
 }
+
+export class UserWithoutPassword {
+  id: number;
+  surname: string;
+  firstName: string;
+  email: string;
+  roles: string;
+  loginToken: string;
+}

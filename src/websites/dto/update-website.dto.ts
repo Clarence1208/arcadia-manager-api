@@ -3,7 +3,7 @@ import { ApiProperty } from "@nestjs/swagger";
 
 export class UpdateWebsiteDto {
   @ApiProperty({
-    example: "DOWN",
+    example: "inactive",
     required: false,
   })
   @IsString()

@@ -6,7 +6,7 @@ import {
 } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { User } from "./user.entity";
+import { User, UserWithoutPassword } from "./user.entity";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
 import { hash, compare } from "bcrypt";
@@ -82,6 +82,7 @@ export class UsersService {
         firstName: user.firstName,
         surname: user.surname,
         loginToken: token,
+        roles: user.roles,
       };
     } catch (error) {
       throw new InternalServerErrorException(
@@ -123,6 +124,7 @@ export class UsersService {
     return await this.usersRepository.find({
       take: limit || 10,
       skip: (page - 1) * limit || 0,
+      relations: ["websites"],
     });
   }
 
@@ -132,6 +134,18 @@ export class UsersService {
       throw new NotFoundException(`User #${id} not found`);
     }
     return user;
+  }
+
+  async findOneWithoutPassword(id: number): Promise<UserWithoutPassword> {
+    const user = await this.findOne(id);
+    return {
+      id: user.id,
+      email: user.email,
+      firstName: user.firstName,
+      surname: user.surname,
+      roles: user.roles,
+      loginToken: user.loginToken,
+    };
   }
 
   async remove(id: number): Promise<User> {

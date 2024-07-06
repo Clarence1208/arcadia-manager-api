@@ -5,6 +5,8 @@ import {CreateWebsiteDto} from "./dto/create-website-dto";
 import {ListWebsitesDto} from "./dto/list-websites.dto";
 import {Website} from "./website.entity";
 import {UpdateWebsiteDto} from "./dto/update-website.dto";
+import { Roles } from "src/roles/roles.decorator";
+import { Role } from "src/roles/roles.enum";
 
 export const CAN_SKIP_AUTH_KEY = "isPublic";
 export const SkipAuthentication = () => SetMetadata(CAN_SKIP_AUTH_KEY, true);
@@ -162,6 +164,7 @@ export class WebsitesController {
 
 
     @Post("scripts/pauseWebsite")
+    @Roles([Role.SuperAdmin])
     @ApiResponse({
         status: 201,
         description: "The website has been successfully paused.",
@@ -180,6 +183,7 @@ export class WebsitesController {
     }
 
     @Post("scripts/resumeWebsite")
+    @Roles([Role.SuperAdmin])
     @ApiResponse({
         status: 201,
         description: "The website has been successfully created.",
@@ -198,6 +202,7 @@ export class WebsitesController {
     }
 
     @Post("scripts/deleteWebsite")
+    @Roles([Role.SuperAdmin])
     @ApiResponse({
         status: 201,
         description: "The website has been successfully deleted.",

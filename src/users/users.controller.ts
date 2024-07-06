@@ -13,7 +13,7 @@ import { ApiBearerAuth, ApiBody, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { UsersService } from "./users.service";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { ListAllEntities } from "./dto/list-users.dto";
-import { User } from "./user.entity";
+import { User, UserWithoutPassword } from "./user.entity";
 import { UpdateUserDto } from "./dto/update-user.dto";
 import { LoginUserDto } from "./dto/login-user.dto";
 import { LogoutUserDto } from "./dto/logout-user.dto";
@@ -81,8 +81,7 @@ export class UsersController {
   }
 
   @Get()
-  @Roles([Role.Admin])
-  // @UseGuards(JwtAuthGuard) Before making it global this was needed
+  @Roles([Role.SuperAdmin])
   @ApiResponse({
     status: 200,
     description: "The users has been successfully fetched.",
@@ -99,6 +98,16 @@ export class UsersController {
   async findOne(@Param("id") id: number): Promise<User> {
     return this.usersService.findOne(id);
   }
+
+  @Get(":id/withoutPassword")
+  @ApiResponse({
+    status: 200,
+    description: "The user has been successfully fetched.",
+  })
+  async findOneWithoutPassword(@Param("id") id: number): Promise<UserWithoutPassword> {
+    return this.usersService.findOneWithoutPassword(id);
+  }
+
 
   @Patch(":id")
   @ApiResponse({
