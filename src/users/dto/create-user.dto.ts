@@ -37,4 +37,6 @@ export class CreateUserDto {
     required: false,
   })
   roles?: string;
+
+  stripeCustomerId?: string;
 }

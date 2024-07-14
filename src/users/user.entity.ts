@@ -30,6 +30,12 @@ export class User {
 
   @OneToMany((type) => Website, (website) => website.user)
   websites: Website[];
+
+  @Column({
+    nullable: true,
+  })
+  stripeCustomerId: string;
+
 }
 
 export class UserWithoutPassword {

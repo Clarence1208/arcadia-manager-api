@@ -14,13 +14,20 @@ import { LoginUserDto } from "./dto/login-user.dto";
 import { sign } from "jsonwebtoken";
 import { LogoutUserDto } from "./dto/logout-user.dto";
 import { UsersValidator } from "./dto/users.validator";
+import {Stripe} from "stripe";
+import * as stripe from "stripe";
 
 @Injectable()
 export class UsersService {
+  private stripe;
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
-  ) {}
+  ) {
+    this.stripe = new Stripe(process.env.STRIPE_API_SECRET_KEY, {
+      apiVersion: '2024-06-20',
+    });
+  }
 
   async create(user: CreateUserDto): Promise<User> {
     try {
@@ -36,12 +43,18 @@ export class UsersService {
     }
 
     user.password = await hash(user.password, 10);
-
     try {
+      const answer = await this.stripe.customers.create({
+            email: user.email,
+            name: user.firstName + ' ' + user.surname,
+      }
+      );
+      user.stripeCustomerId = answer.id;
       return await this.usersRepository.save(user);
     } catch (error) {
       throw new InternalServerErrorException(
-        error.message || "An error occurred while creating the user",
+          error.message ||
+          'An error occurred while creating the customer on stripe',
       );
     }
   }
@@ -83,10 +96,11 @@ export class UsersService {
         surname: user.surname,
         loginToken: token,
         roles: user.roles,
+        customerId: user.stripeCustomerId,
       };
     } catch (error) {
       throw new InternalServerErrorException(
-        "SOmething went wrong please try again",
+        "Something went wrong please try again",
       );
     }
   }
