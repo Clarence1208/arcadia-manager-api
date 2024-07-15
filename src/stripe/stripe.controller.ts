@@ -42,6 +42,7 @@ type MembershipDTO = {
 export class StripeController {
   constructor(private readonly stripeService: StripeService) {}
   @Post('/subscriptions')
+  @SkipAuthentication()
   async createSubscriptionIntent(
     @Body() params: { priceId: string; customerId: string; confirmationTokenId: string},
   ) {
@@ -51,10 +52,9 @@ export class StripeController {
   @Get('/invoices/:id')
   @Roles([Role.Admin, Role.SuperAdmin, Role.CurrentUser])
   async listInvoices(
-    @Query('accountId') accountId: string,
     @Query('customerId') customerId: string,
   ) {
-    return this.stripeService.getAllInvoices(accountId, customerId);
+    return this.stripeService.getAllInvoices(customerId);
   }
 
   @Delete('/subscriptions/:id')

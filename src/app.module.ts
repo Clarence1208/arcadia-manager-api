@@ -13,6 +13,9 @@ import { RolesGuard } from "./roles/roles.guard";
 import { Website } from "./websites/website.entity";
 import { WebsitesController } from "./websites/websites.controller";
 import { WebsitesService } from "./websites/websites.service";
+import {StripeController} from "./stripe/stripe.controller";
+import * as stripe from "stripe";
+import {StripeService} from "./stripe/stripe.service";
 
 @Module({
   imports: [
@@ -29,7 +32,7 @@ import { WebsitesService } from "./websites/websites.service";
     }),
     TypeOrmModule.forFeature([User, Website]),
   ],
-  controllers: [AppController, UsersController, WebsitesController],
+  controllers: [AppController, UsersController, WebsitesController, StripeController],
   providers: [
     {
       provide: APP_GUARD,
@@ -42,6 +45,7 @@ import { WebsitesService } from "./websites/websites.service";
     AppService,
     UsersService,
     WebsitesService,
+    StripeService,
   ],
 })
 export class AppModule {}

@@ -40,7 +40,6 @@ export class StripeService {
     confirmationTokenId: string;
   }) {
 
-    console.log(params);
     try {
       const subscription = await this.stripe.subscriptions.create(
         {
@@ -71,12 +70,9 @@ export class StripeService {
     }
   }
 
-  async getAllInvoices(accountId: string, customerId: string) {
+  async getAllInvoices(customerId: string) {
     try {
-      const invoices = await this.stripe.invoices.list(
-        { customer: customerId },
-        { stripeAccount: accountId },
-      );
+      const invoices = await this.stripe.invoices.list();
       return invoices.data;
     } catch (error) {
       return {
