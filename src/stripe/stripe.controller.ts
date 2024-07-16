@@ -57,6 +57,15 @@ export class StripeController {
     return this.stripeService.getAllInvoices(customerId);
   }
 
+
+  @Get('/subscriptions/:id')
+  @Roles([Role.Admin, Role.SuperAdmin, Role.CurrentUser])
+  async listSubscriptions(
+      @Query('customerId') customerId: string,
+  ) {
+    return this.stripeService.getSubscription(customerId);
+  }
+
   @Delete('/subscriptions/:id')
   @Roles([Role.Admin, Role.SuperAdmin, Role.CurrentUser])
   async cancelSubscription(

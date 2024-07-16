@@ -30,7 +30,7 @@ export class StripeService {
   private stripe;
 
   constructor() {
-    this.stripe = new Stripe(process.env.STRIPE_API_SECRET_KEY, {
+    this.stripe = new Stripe(process.env.STRIPE_API_SECRET_KEY_PROD, {
       apiVersion: '2024-06-20',
     });
   }
@@ -72,8 +72,38 @@ export class StripeService {
 
   async getAllInvoices(customerId: string) {
     try {
-      const invoices = await this.stripe.invoices.list();
+      const invoices = await this.stripe.invoices.list(
+            { customer: customerId },
+      );
       return invoices.data;
+    } catch (error) {
+      return {
+        message: error,
+      };
+    }
+  }
+
+  async getSubscription(customerId: string) {
+    try {
+      const subscriptions = await this.stripe.subscriptions.list(
+          { customer: customerId },
+      );
+      const subscription: Stripe.Subscription = subscriptions.data[0];
+      const product = await this.stripe.products.retrieve(
+          subscription.items.data[0].price.product,
+      );
+
+      const res = {
+        id: subscription.id,
+        status: subscription.status,
+        current_period_end: subscription.current_period_end,
+        current_period_start: subscription.current_period_start,
+        created_at: subscription.created,
+        cancel_at: subscription.cancel_at,
+        price: subscription.items.data[0].price,
+        product: product,
+      };
+      return res;
     } catch (error) {
       return {
         message: error,

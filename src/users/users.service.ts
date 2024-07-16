@@ -24,7 +24,7 @@ export class UsersService {
     @InjectRepository(User)
     private usersRepository: Repository<User>,
   ) {
-    this.stripe = new Stripe(process.env.STRIPE_API_SECRET_KEY, {
+    this.stripe = new Stripe(process.env.STRIPE_API_SECRET_KEY_PROD, {
       apiVersion: '2024-06-20',
     });
   }
@@ -89,7 +89,7 @@ export class UsersService {
         },
       );
       await this.usersRepository.update(user.id, { loginToken: token });
-
+    console.log(user)
       return {
         id: user.id,
         firstName: user.firstName,
