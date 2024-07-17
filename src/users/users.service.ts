@@ -135,6 +135,9 @@ export class UsersService {
   }
 
   async findAll(limit?: number, page?: number): Promise<User[]> {
+    if (!page && !limit) {
+        return await this.usersRepository.find({relations: ["websites"]});
+    }
     return await this.usersRepository.find({
       take: limit || 10,
       skip: (page - 1) * limit || 0,
