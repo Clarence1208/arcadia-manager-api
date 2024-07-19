@@ -74,6 +74,7 @@ export class WebsitesController {
     }
 
     @Delete(":id")
+    @Roles([Role.User, Role.SuperAdmin])
     @ApiResponse({
         status: 200,
         description: "The website has been successfully deleted.",
@@ -203,7 +204,7 @@ export class WebsitesController {
     }
 
     @Post("scripts/deleteWebsite")
-    @Roles([Role.SuperAdmin])
+    @Roles([Role.SuperAdmin, Role.User])
     @ApiResponse({
         status: 201,
         description: "The website has been successfully deleted.",

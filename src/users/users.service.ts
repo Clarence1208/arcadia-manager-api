@@ -89,7 +89,6 @@ export class UsersService {
         },
       );
       await this.usersRepository.update(user.id, { loginToken: token });
-    console.log(user)
       return {
         id: user.id,
         firstName: user.firstName,
