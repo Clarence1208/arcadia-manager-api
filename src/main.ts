@@ -6,15 +6,13 @@ import * as fs from "node:fs";
 async function bootstrap() {
 
     const httpsOptions = {
-    key: fs.readFileSync('/etc/ssl/live/arcadia-solution.com-0002/privkey.pem'),
-    cert: fs.readFileSync(
-      '/etc/ssl/live/arcadia-solution.com-0002/fullchain.pem',
-    ),
+        key: fs.readFileSync('/etc/ssl/live/arcadia-solution.com-0002/privkey.pem'),
+        cert: fs.readFileSync('/etc/ssl/live/arcadia-solution.com-0002/fullchain.pem'),
     };
 
     const app = await NestFactory.create(
         AppModule,
-        {httpsOptions}
+        {httpsOptions},
     );
 
     const config = new DocumentBuilder()
