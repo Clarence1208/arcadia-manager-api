@@ -166,7 +166,7 @@ export class WebsitesController {
 
 
     @Post("scripts/pauseWebsite")
-    @Roles([Role.SuperAdmin])
+    @Roles([Role.SuperAdmin, Role.User])
     @ApiResponse({
         status: 201,
         description: "The website has been successfully paused.",
@@ -185,7 +185,7 @@ export class WebsitesController {
     }
 
     @Post("scripts/resumeWebsite")
-    @Roles([Role.SuperAdmin])
+    @Roles([Role.SuperAdmin, Role.User])
     @ApiResponse({
         status: 201,
         description: "The website has been successfully created.",
