@@ -148,14 +148,11 @@ export class WebsitesService {
         const scriptPath = `./src/scripts/new-dommain.sh ${params.associationName} ${params.subDomain}`;
         try {
             const {stdout, stderr} = await execProm(`bash ${scriptPath}`);
-            console.log(`Script stdout: ${stdout}`);
             if (stderr) {
-                console.error(`Script stderr: ${stderr}`);
                 return {message: stderr};
             }
             return {message: stdout};
         } catch (error) {
-            console.error(`Error executing script: ${error.message}`);
             return {message: error.message};
         }
     }
@@ -179,7 +176,6 @@ export class WebsitesService {
     async deployAPIdocker(params: ScriptDTO) {
 
         if (!scriptSQL){
-            console.error(`No SQL script found`);
             return {message: "No SQL script found"};
         }
         let customScriptSQL = await this.customizeSQL(scriptSQL,params.adminEmail, params.dbPassword, params.associationName, "Admin", "ADMIN", "1990-12-12", params.logoName);
@@ -187,22 +183,17 @@ export class WebsitesService {
         const filePath = `./src/scripts/api-deploy.sql`;
         await fs.writeFile(filePath, customScriptSQL, (err: { message: any; }) => {
             if (err) {
-                console.error(`Error writing file: ${err.message}`);
                 return {message: err.message};
             }
-            console.log(`File written to ${filePath}`);
         });
         const scriptPath = `./src/scripts/deploy-api.sh ${params.associationName} ${params.subDomain} '${filePath}' `;
         try {
             const {stdout, stderr} = await execProm(`bash ${scriptPath}`);
-            console.log(`Script stdout: ${stdout}`);
             if (stderr) {
-                console.error(`Script stderr: ${stderr}`);
                 return {message: stderr};
             }
             return {message: stdout};
         } catch (error) {
-            console.error(`Error executing script: ${error.message}`);
             return {message: error.message};
         }
     }
@@ -211,14 +202,11 @@ export class WebsitesService {
         const scriptPath = `./src/scripts/deploy-front.sh ${params.associationName} ${params.subDomain}`;
         try {
             const {stdout, stderr} = await execProm(`bash ${scriptPath}`);
-            console.log(`Script stdout: ${stdout}`);
             if (stderr) {
-                console.error(`Script stderr: ${stderr}`);
                 return {message: stderr};
             }
             return {message: stdout};
         } catch (error) {
-            console.error(`Error executing script: ${error.message}`);
             return {message: error.message};
         }
     }
@@ -227,14 +215,11 @@ export class WebsitesService {
         const scriptPath = `./src/scripts/add-nginx.sh ${params.associationName} ${params.subDomain}`;
         try {
             const {stdout, stderr} = await execProm(`bash ${scriptPath}`);
-            console.log(`Script stdout: ${stdout}`);
             if (stderr) {
-                console.error(`Script stderr: ${stderr}`);
                 return {message: stderr};
             }
             return {message: stdout};
         } catch (error) {
-            console.error(`Error executing script: ${error.message}`);
             return {message: error.message};
         }
     }
@@ -243,14 +228,11 @@ export class WebsitesService {
         const scriptPath = `./src/scripts/pause-website.sh ${subdomain.subdomain}`;
         try {
             const {stdout, stderr} = await execProm(`bash ${scriptPath}`);
-            console.log(`Script stdout: ${stdout}`);
             if (stderr) {
-                console.error(`Script stderr: ${stderr}`);
                 return {message: stderr};
             }
             return {message: stdout};
         } catch (error) {
-            console.error(`Error executing script: ${error.message}`);
             return {message: error.message};
         }
     }
@@ -259,14 +241,11 @@ export class WebsitesService {
         const scriptPath = `./src/scripts/resume-website.sh ${subdomain.subdomain}`;
         try {
             const {stdout, stderr} = await execProm(`bash ${scriptPath}`);
-            console.log(`Script stdout: ${stdout}`);
             if (stderr) {
-                console.error(`Script stderr: ${stderr}`);
                 return {message: stderr};
             }
             return {message: stdout};
         } catch (error) {
-            console.error(`Error executing script: ${error.message}`);
             return {message: error.message};
         }
     }
@@ -275,14 +254,11 @@ export class WebsitesService {
         const scriptPath = `./src/scripts/delete-site.sh ${subdomain.subdomain}`;
         try {
             const {stdout, stderr} = await execProm(`bash ${scriptPath}`);
-            console.log(`Script stdout: ${stdout}`);
             if (stderr) {
-                console.error(`Script stderr: ${stderr}`);
                 return {message: stderr};
             }
             return {message: stdout};
         } catch (error) {
-            console.error(`Error executing script: ${error.message}`);
             return {message: error.message};
         }
     }
